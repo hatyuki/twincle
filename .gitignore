@@ -1,0 +1,7 @@
+*.log
+*.sw[a-z]
+Build
+.carton/
+_build/
+local/
+tmp/

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Twincle</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="<: static_file('asset/css/main.css') :>" rel="stylesheet" type="text/css" media="screen" />
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <header class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="#">Twincle</a>
+                    <ul class="nav pull-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="<: $myself.icon :>" width="20" />
+                                <: $myself.name :> <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                            : if $myself.authorized {
+                                <li><a href="<: uri_for('logout') :>"><i class="icon-off"></i> ログアウト</a></li>
+                            : } else {
+                                <li><a href="<: uri_for('login/twitter') :>"><i class="icon-share"></i> Twitter でログイン</a></li>
+                            : }
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <h2><: $room.name :></h2>
+            <div class="row">
+                <div id="dashboard" class="span4">
+                : if $myself.authorized {
+                    <div id="tweet-box">
+                        <div class="text-area">
+                            <textarea id="tweet-editor" class="span4" placeholder="つぶやく"></textarea>
+                        </div>
+                        <div class="button-area clearfix">
+                            <div class="pull-right">
+                                <a id="tweet-send" href="#" class="btn disabled">ツイート</a>
+                            </div>
+                        </div>
+                    </div>
+                : } else {
+                    <div id="tweet-box" class="well">
+                        <div>
+                            <a href="<: uri_for('login/twitter') :>"><i class="icon-share"></i> Twitter でログイン</a>
+                        </div>
+                    </div>
+                : }
+                    <div class="well">
+                        <ul id="members" class="nav nav-list">
+                            <li class="nav-header">Members</li>
+                        : if $myself.authorized {
+                            <li class="active">
+                                <a href="#"><img src="<: $myself.icon :>" class="img-rounded" width="20" /> <: $myself.name :></a>
+                            </li>
+                        : }
+                        : for $members -> $member {
+                        :     include member { digest => $member.digest, icon => $member.icon, name => $member.name }
+                        : }
+                        </ul>
+                    </div>
+                </div><!-- #dashboard -->
+                <div class="span8">
+                    <ul id="timeline" class="thumbnails">
+                        : for $history -> $h { $h | raw }
+                    </ul>
+                </div><!-- #timeline -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+
+        <footer class="footer">
+            <div class="container">
+                <p class="pull-right">
+                    <a href="#">Back to top</a>
+                </p>
+                <p>Twincle Powered by</p>
+                <ul class="footer-links">
+                    <li><a href="//amon.64p.org/">Amon2</a></li>
+                    <li><a href="//twitter.github.com/bootstrap/">Twitter Bootstrap</a></li>
+                    <li><a href="//www.websocket.org/">WebSocket</a></li>
+                    <li><a href="//msgpack.org/">MessagePack<a></li>
+                </ul>
+            </div>
+        </footer>
+
+        <script src="//code.jquery.com/jquery-latest.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+        <script src="//raw.github.com/uupaa/msgpack.js/master/msgpack.codec.js"></script>
+        <script src="<: static_file('asset/js/twincle.js') :>"></script>
+        <script>$(function ( ) { new Twincle("<: 'ws://' ~ $websocket ~ uri_for('socket') :>") })</script>
+    </body>
+</html>

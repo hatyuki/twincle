@@ -1,0 +1,18 @@
+<li class="span8 user-<: $userid :>">
+    <div class="thumbnail">
+        <div class="clearfix">
+            <div class="pull-left">
+                <img src="<: $usericon :>" class="img-polaroid" />
+            </div>
+            <div class="tweet">
+                <div class="tweet-header">
+                    <strong><: $username :></strong>
+                    <span class="pull-right muted"><: $timestamp :></span>
+                </div>
+                <div class="tweet-text">
+                    <p><: $message :></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>

@@ -1,0 +1,26 @@
+use strict;
+use warnings;
+use Amon2::Util;
+use File::Spec;
+my $basedir = Amon2::Util::base_dir('Twincle');
+
+return +{
+    xslate => +{
+        path      => File::Spec->catdir($basedir, 'template'),
+        cache_dir => File::Spec->catdir($basedir, 'tmp', 'xslate'),
+    },
+
+    storage => +{
+        host => '127.0.0.1',
+        port => '6379',
+    },
+
+    history_size => 100,
+
+    Auth => +{
+        Twitter => +{
+            consumer_key    => '',
+            consumer_secret => '',
+        },
+    },
+};

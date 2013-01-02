@@ -1,0 +1,3 @@
+<li id="<: $digest :>">
+    <a href="#"><img src="<: $icon :>" class="img-rounded" width="20" /> <: $name :></a>
+</li>
