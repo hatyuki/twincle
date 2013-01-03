@@ -48,6 +48,10 @@ Twincle.prototype = {
                     $('#' + id).remove( );
                     break;
 
+                case 'pong':
+                    // nop
+                    break;
+
                 default:
                     console.log(data);
             }
@@ -56,6 +60,8 @@ Twincle.prototype = {
         ws.onerror = function (ev) {
             console.log('error' + ev);
         };
+
+        setInterval(function ( ) { twincle.sendMessage('ping', 'Lounge', 'ping') }, 30000);
     },
 
     setupWindowTitle: function ( ) {

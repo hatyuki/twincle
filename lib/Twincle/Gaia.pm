@@ -181,21 +181,29 @@ sub setup_socket
 sub handle_message
 {
     my ($self, $session_id, $packed) = @_;
-    my $user    = $self->find_user($session_id);
     my $message = Twincle::Message->new(packed => $packed);
-
-    unless ($user && $user->authorized) {
-        warnf 'Receive message from not logged in user: %s', $session_id;
-        return ;
-    }
 
     return if !$message->body || $message->body =~ m/^\x{fffd}$/;
 
     debugf 'Receive message: Type=%s Room=%s Body=%s', $message->type, $message->room, $message->body;
 
+    my $user = $self->find_user($session_id);
     given ($message->type) {
         when ('stream') {
-            $self->send_message($user, $message);
+            if ($user && $user->authorized) {
+                $self->send_message($user, $message);
+            }
+            else {
+                warnf 'Receive message from not logged in user: %s', $session_id;
+            }
+        }
+        when ('ping') {
+            my $message = Twincle::Message->new(
+                type => 'pong',
+                room => 'Lounge',
+                body => 'pong',
+            );
+            $user->send_message($message->publish);
         }
         default {
             warnf 'Unknown message type: Type=%s Room=%s Body=%s', $message->type, $message->room, $message->body;
