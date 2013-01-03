@@ -71,6 +71,10 @@ __PACKAGE__->load_plugins(
 
             return $c->redirect('/');
         },
+        on_error => sub {
+            my ($c, $error) = @_;
+            return $c->redirect('/');
+        },
     },
 #    'Web::FillInFormLite',
 #    'Web::CSRFDefender',
