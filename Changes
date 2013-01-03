@@ -1,2 +1,6 @@
+0.02  2013-01-03
+  - ADD: Sending heartbeate message in order to keep WebSocket connection
+  - ADD: Implement error handler for twitter OAuth
+
 0.01  2013-01-02
   - ADD: Initial release
