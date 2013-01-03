@@ -27,32 +27,30 @@ has users => (
     },
 );
 
-around join => sub {
-    my ($origin, $self, $session_id, $user) = @_;
+after join => sub {
+    my ($self, $session_id, $user) = @_;
 
-    if ($user->authorized) {
-        my $message = Twincle::Message->new(
-            type => 'join',
-            room => $self->name,
-        );
+    return unless $user->authorized;
 
-        $message->render('member.tx', +{
-                digest => $user->digest,
-                id     => $user->id,
-                name   => $user->name,
-                icon   => $user->icon,
-            },
-        );
+    my $message = Twincle::Message->new(
+        type => 'join',
+        room => $self->name,
+    );
 
-        $self->send_message($message, $user);
-    }
+    $message->render('member.tx', +{
+            digest => $user->digest,
+            id     => $user->id,
+            name   => $user->name,
+            icon   => $user->icon,
+        },
+    );
 
-    return $self->$origin($session_id, $user);
+    $self->send_message($message, $user);
 };
 
 before leave => sub {
     my ($self, $session_id) = @_;
-    my $user    = $self->find_user($session_id);
+    my $user = $self->find_user($session_id);
     
     return unless $user;
 
@@ -62,7 +60,7 @@ before leave => sub {
         body => $user->digest,
     );
 
-    $self->send_message($message);
+    $self->send_message($message, $user);
 };
 
 no Mouse;

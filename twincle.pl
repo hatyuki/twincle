@@ -13,8 +13,6 @@ use Getopt::Long ( );
 use Plack::Runner;
 use Proclet::Declare;
 
-my $tmpdir = File::Spec->catdir($APPROOT, 'tmp', 'session');
-mkpath $tmpdir unless -e $tmpdir;
 startup( );
 
 sub startup
