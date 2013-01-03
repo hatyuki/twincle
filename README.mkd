@@ -1,4 +1,26 @@
 Twincle
 ========================================
+Amon2 + WebSocket + Redis を使った今更ながらの Chat
 
-http://d.hatena.ne.jp/magicalhat/20130102/1357144501
+- http://d.hatena.ne.jp/magicalhat/20130102/1357144501
+
+
+How To Setup
+----------------------------------------
+1. 依存モジュールをインストール
+
+    $ cartion install
+
+2. 設定ファイルをコピー
+
+    $ cp config/deployment.pl.org config/deployment.pl
+
+3. Twitter の consumer key の設定を行う (その他はご自由に)
+
+    $vi config/deployment.pl
+    ... Edit configuration
+
+4. 起動スクリプトを使って起動
+
+    $ ./twincle.pl
+
