@@ -1,7 +1,7 @@
 *.log
 *.sw[a-z]
 Build
+twincle.pid
 .carton/
 _build/
 local/
-tmp/
