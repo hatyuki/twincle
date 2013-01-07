@@ -1,3 +1,7 @@
+0.03  2013-01-07
+  - MOD: Update start-up script
+  - FIX: fix typo
+
 0.02  2013-01-03
   - ADD: Sending heartbeate message in order to keep WebSocket connection
   - ADD: Implement error handler for twitter OAuth
