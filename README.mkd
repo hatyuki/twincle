@@ -9,7 +9,7 @@ How To Setup
 ----------------------------------------
 1. 依存モジュールをインストール
 
-    $ cartion install
+    $ carton install
 
 2. 設定ファイルをコピー
 
@@ -20,7 +20,10 @@ How To Setup
     $vi config/deployment.pl
     ... Edit configuration
 
-4. 起動スクリプトを使って起動
+4. Redis の設定ファイルもコピー
+
+    $ cp config/redis.conf.org config/redis.conf
+
+5. 起動スクリプトを使って起動
 
     $ ./twincle.pl
-

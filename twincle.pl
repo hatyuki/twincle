@@ -13,7 +13,13 @@ use Getopt::Long ( );
 use Plack::Runner;
 use Proclet::Declare;
 
-startup( );
+main : {
+    open my $pid, '>twincle.pid' or die $!;
+    print $pid $$;
+    close $pid;
+
+    startup( );
+}
 
 sub startup
 {
